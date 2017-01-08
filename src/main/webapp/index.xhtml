@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<f:view>
+    <h:head/>
+    <h:body>
+        <h:form id="mainForm">
+            <p:dataTable id="carsDataTable" value="#{CarsViewBean.cars}" var="car"
+                         filteredValue="#{CarsViewBean.filteredCars}" widgetVar="carsDataTableWidget">
+                <p:column sortBy="#{car.brand}" id="brandColumn">
+                    <f:facet name="header">
+                        <h:outputText value="Brand"/>
+                        <h:inputText value="#{CarsViewBean.carsBrandFilterValue}" id="brandFilterValueInputText"
+                                     styleClass="ui-column-filter ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+                                     onkeyup="carsDataTableWidget.filter()"/>
+                    </f:facet>
+                    <h:outputText value="#{car.brand}"/>
+                </p:column>
+                <p:column headerText="Year" sortBy="#{car.year}" filterBy="#{car.year}">
+                    <h:outputText value="#{car.year}"/>
+                </p:column>
+                <p:column headerText="Color" sortBy="#{car.color}" filterBy="#{car.color}">
+                    <h:outputText value="#{car.color}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                var brandColumn = document.getElementById('mainForm:carsDataTable:brandColumn');
+                var brandFilterValueInputText = document.getElementById('mainForm:carsDataTable:brandFilterValueInputText');
+
+                jQuery(brandColumn).append(brandFilterValueInputText);
+            });
+        </script>
+    </h:body>
+</f:view>
+</html>
